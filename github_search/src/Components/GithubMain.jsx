@@ -19,7 +19,6 @@ export default function GithubMain() {
           // setLoad(false);
           console.log(newUser);
         }, 1200);
-        setUser("");
       }
     } catch (error) {
       console.log("Error:-", error);
@@ -49,6 +48,13 @@ export default function GithubMain() {
             </span>
           </button>
         </div>
+
+        {/* {user === "" && (
+          <div class="flex items-center justify-center">
+            <img src="https://i.pinimg.com/564x/c0/52/1e/c0521ee23b58e39f3b5b3c087f4a1295.jpg" />
+          </div>
+        )} */}
+
         {data.followers && (
           <div className="w-full lg:w-4/12 px-4 mx-auto">
             <div className="mainContainer relative flex flex-col min-w-0 break-words  w-full mb-6 shadow-xl rounded-lg mt-16">
@@ -113,7 +119,7 @@ export default function GithubMain() {
         {data.message && (
           <>
             <div class="flex items-center justify-center">
-              <img src="https://i.pinimg.com/originals/9d/9d/3d/9d9d3db33e6c862d7671c2138d553f94.gif" />
+              <img src="https://i.pinimg.com/originals/24/1c/34/241c343b3ea096a651f0db708070d00f.gif" />
             </div>
 
             <button
