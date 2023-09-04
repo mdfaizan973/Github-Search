@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import "./GithubSearch.css";
-
+import { LiaGithub } from "react-icons/lia";
 export default function GithubMain() {
   const [user, setUser] = useState("");
   const [data, setData] = useState({});
-  const [load, setLoad] = useState(false);
+  // const [load, setLoad] = useState(false);
   useEffect(() => {
     handleFind();
   }, []);
   const handleFind = async () => {
-    setLoad(true);
+    // setLoad(true);
     try {
-      let response = await fetch(`https://api.github.com/users/${user}`);
-      let newUser = await response.json();
-      setTimeout(() => {
-        setData(newUser);
-        setLoad(false);
+      if (user !== "") {
+        let response = await fetch(`https://api.github.com/users/${user}`);
+        let newUser = await response.json();
+        setTimeout(() => {
+          setData(newUser);
+          // setLoad(false);
+          console.log(newUser);
+        }, 1200);
         setUser("");
-        // console.log(newUser);
-      }, 1200);
+      }
     } catch (error) {
       console.log("Error:-", error);
     }
@@ -26,29 +28,28 @@ export default function GithubMain() {
 
   return (
     <>
-      {load ? (
-        <h1>Loading....</h1>
-      ) : (
-        <div className="mainContainer1">
-          {/* -----Input UI----- */}
-          <div className="mb-6 flex flex-col sm:flex-row items-center justify-center">
-            <input
-              placeholder="🔍 Enter your Github Username....."
-              type="text"
-              id="large-input"
-              onChange={(e) => setUser(e.target.value)}
-              className="block w-full sm:w-1/2 p-4 border border-gray-300 rounded-lg sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-            <button
-              onClick={handleFind}
-              type="button"
-              className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4 sm:mt-0 ml-0 sm:ml-2 mb-2 sm:mb-0 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-            >
+      <div className="mainContainer1">
+        {/* -----Input UI----- */}
+        <div className="mb-6 flex flex-col sm:flex-row items-center justify-center">
+          <input
+            placeholder="🔍 Enter your Github Username....."
+            type="text"
+            id="large-input"
+            onChange={(e) => setUser(e.target.value)}
+            className="block w-full sm:w-1/2 p-4 border border-gray-300 rounded-lg sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <button
+            onClick={handleFind}
+            type="button"
+            className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4 sm:mt-0 ml-0 sm:ml-2 mb-2 sm:mb-0 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+          >
+            <span class="flex flex-col items-center justify-center">
+              <LiaGithub />
               Find User
-            </button>
-          </div>
-
-          {/* -----Card UI----- */}
+            </span>
+          </button>
+        </div>
+        {data.followers && (
           <div className="w-full lg:w-4/12 px-4 mx-auto">
             <div className="mainContainer relative flex flex-col min-w-0 break-words  w-full mb-6 shadow-xl rounded-lg mt-16">
               <div className="px-6">
@@ -96,23 +97,47 @@ export default function GithubMain() {
                   </h3>
 
                   <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    {/* <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i> */}
                     Location: {data.location}
                   </div>
-                  <div className="mb-2 text-blueGray-600 mt-10">
-                    {/* <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>$ */}
-                    {data.bio}
-                  </div>
+                  <div className="mb-2 text-blueGray-600 mt-10">{data.bio}</div>
                   <div className="mb-2 text-blueGray-600">
-                    {/* <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i> */}
-                    <a href="">Website</a>
+                    <a href={data.blog} target="_blank">
+                      Website
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+        {data.message && (
+          <>
+            <div class="flex items-center justify-center">
+              <img src="https://i.pinimg.com/originals/9d/9d/3d/9d9d3db33e6c862d7671c2138d553f94.gif" />
+            </div>
+
+            <button
+              type="button"
+              class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg"
+            >
+              User Not Found
+            </button>
+          </>
+        )}
+        {data.name === null && (
+          <>
+            <div class="flex items-center justify-center">
+              <img src="https://i.pinimg.com/originals/24/1c/34/241c343b3ea096a651f0db708070d00f.gif" />
+            </div>
+            <button
+              type="button"
+              class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg"
+            >
+              User Not Found
+            </button>
+          </>
+        )}
+      </div>
     </>
   );
 }
