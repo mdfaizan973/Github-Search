@@ -35,7 +35,7 @@ export default function GithubMain() {
             type="text"
             id="large-input"
             onChange={(e) => setUser(e.target.value)}
-            className="block w-full sm:w-1/2 p-4 border border-gray-300 rounded-lg sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full sm:w-1/2 p-4 border border-gray-300 rounded-lg sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
           <button
             onClick={handleFind}
@@ -44,7 +44,7 @@ export default function GithubMain() {
           >
             <span class="flex flex-col items-center justify-center">
               <LiaGithub />
-              Find User
+              Find {user}
             </span>
           </button>
         </div>
