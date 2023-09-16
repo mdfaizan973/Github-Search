@@ -4,12 +4,18 @@ import { LiaGithub } from "react-icons/lia";
 export default function GithubMain() {
   const [user, setUser] = useState("");
   const [data, setData] = useState({});
+  const [chart, setChart] = useState("");
   // const [load, setLoad] = useState(false);
   useEffect(() => {
     handleFind();
   }, []);
+  function Charting() {
+    let a = `https://ionicabizau.github.io/github-profile-languages/api.html?${user}`;
+    setChart(a);
+  }
   const handleFind = async () => {
     // setLoad(true);
+    Charting();
     try {
       if (user !== "") {
         let response = await fetch(`https://api.github.com/users/${user}`);
@@ -130,6 +136,17 @@ export default function GithubMain() {
             </button>
           </>
         )}
+        {/* Chart Of the users  */}
+        {/* {data.followers && (
+          <div class="p-20 bg-purple-100 w-full md:w-1/2">
+            <h2 class="font-bold mb-2 text-2xl text-purple-800">
+              Most Used Langusges
+            </h2>
+            <div class="bg-white rounded-lg shadow-lg">
+              <iframe class="w-full " src={chart}></iframe>
+            </div>
+          </div>
+        )} */}
         {data.name === null && (
           <>
             <div class="flex items-center justify-center">
